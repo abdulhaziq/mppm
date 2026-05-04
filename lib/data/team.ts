@@ -3,9 +3,9 @@ export const agencyIntro =
 
 export const teamMembers = [
   {
-    name: "Ahmad Razif",
-    role: "Lead Architect & Project Director",
-    bio: "10+ tahun pengalaman dalam enterprise system design. Pernah mengetuai projek digital untuk beberapa badan industri dan kementerian.",
+    name: "A. Haziq Samat",
+    role: "Project Director & Lead Architect",
+    bio: "Berpengalaman dalam strategi perniagaan, transformasi digital dan pelaksanaan projek. Menterjemahkan keperluan operasi kepada sistem, dashboard dan automasi praktikal bagi menyokong keputusan pengurusan.",
     avatar: null as null,
   },
   {

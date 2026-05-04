@@ -36,9 +36,9 @@ export const paymentTerms = [
 ] as const;
 
 export const contactInfo = {
-  name:    "Ahmad Razif",
-  role:    "Project Director",
-  email:   "razif@yourcompany.com.my",
-  phone:   "+60 12-345 6789",
-  company: "Your Digital Studio Sdn Bhd",
+  name:    "A. Haziq Samat",
+  role:    "Project Director & Lead Architect",
+  email:   "haziq@zicco.my",
+  phone:   "+6016 477 67 97",
+  company: "Zicco Sdn Bhd",
 } as const;

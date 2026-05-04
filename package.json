@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:3020": "next dev --turbopack -p 3020",
     "build": "next build --turbopack",
-    "start": "next start"
+    "preview:static": "npx --yes serve@14 out",
+    "start": "next start",
+    "start:3020": "next start -p 3020"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

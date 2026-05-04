@@ -29,8 +29,21 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## GitHub + GitHub Pages (hosting)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Push this repo to GitHub. The site is a **static export** published with **GitHub Actions → GitHub Pages** (no separate host required).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Full setup (Pages settings, URLs, custom domain / “friendly” URL): **[`docs/DEPLOY-GITHUB-PAGES.md`](docs/DEPLOY-GITHUB-PAGES.md)**.
+
+Preview the built files locally:
+
+```bash
+npm run build
+npx serve out
+```
+
+(`npm run start` is for non-static Next servers only; this project exports static HTML.)
+
+## Client proposal template
+
+To reuse this codebase for another client, see [`templates/client-proposal/README.md`](templates/client-proposal/README.md) and the copy brief [`templates/client-proposal/CONTENT-CHECKLIST.md`](templates/client-proposal/CONTENT-CHECKLIST.md).

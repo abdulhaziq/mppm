@@ -7,4 +7,5 @@ export const BRAND = {
   ink:       "#0F172A",
 } as const;
 
-export const LOGO_URL = "https://www.mppmal.my/wp-content/uploads/2023/01/logo-mppm.png";
+/** Vendored from `wp-content/uploads/2024/05/cropped-LOGO-BULAT-NEW.png` (served as `/mppm-logo.png`). */
+export const LOGO_URL = "/mppm-logo.png";
