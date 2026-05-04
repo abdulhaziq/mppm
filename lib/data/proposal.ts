@@ -39,6 +39,47 @@ export const alerts = [
   "Isu cashflow dominan di SME manufacturing",
 ] as const;
 
+export const chairmanReadout = {
+  summary:
+    "MPPM mempunyai mandat, jaringan dan kredibiliti nasional. Dengan membina MPPM Digital Operating System (MDOS), organisasi boleh beralih daripada model berasaskan program kepada platform ekosistem berdata yang mengaktifkan ahli, Pakar Industri, program dan advokasi dasar secara berterusan.",
+  whyNow:
+    "Cabaran SME semakin kompleks dan memerlukan respon yang lebih pantas, konsisten serta berasaskan data. Tanpa sistem bersepadu, momentum semasa sukar diterjemahkan kepada impak jangka panjang.",
+  outcomes: [
+    "Aktivasi ekosistem SME & Pakar Industri yang lebih tersusun dan boleh diukur.",
+    "Pipeline program, konsultasi dan peluang perniagaan yang berulang, bukan episodik.",
+    "Dashboard policy intelligence untuk mengukuhkan suara MPPM kepada kerajaan dan stakeholder.",
+  ],
+  decisionRequired:
+    "Kelulusan untuk memulakan pilot 3 bulan (100 SME, 20 Pakar Industri) sebagai fasa validasi dengan milestone impak yang jelas.",
+} as const;
+
+export const executiveBrief = {
+  context:
+    "MPPM telah membina asas penting: jaringan ahli, inisiatif Pakar Industri dan kredibiliti sebagai jambatan kerajaan-industri. Peluang strategik seterusnya ialah mengintegrasikan aset ini ke dalam satu sistem operasi digital yang menjana data, tindakan dan keputusan.",
+  recommendation:
+    "Laksanakan MDOS sebagai platform teras MPPM, dimulakan dengan pendekatan pilot berisiko rendah untuk mengesahkan model aktivasi, pemantauan impak dan kebolehskalaan.",
+  deliverables: [
+    "Member Intelligence System",
+    "Pakar Industri Activation Engine",
+    "SME Readiness & Growth Module",
+    "Business Matching Hub",
+    "Policy & Impact Dashboard",
+    "Programme & Certification System",
+  ],
+  commercialSnapshot: [
+    "Cadangan pilot: 3 bulan",
+    "Skop validasi: 100 SME, 20 Pakar Industri",
+    "Model pelaksanaan: berfasa dengan metrik impak bulanan",
+  ],
+  expectedOutcomes: [
+    "Peralihan daripada organisation-driven kepada platform-driven.",
+    "Keupayaan advokasi berasaskan data yang lebih kredibel.",
+    "Laluan pertumbuhan ahli yang lebih jelas melalui sistem, bukan acara semata-mata.",
+  ],
+  decisionRequired:
+    "Persetujuan prinsip untuk meluluskan fasa pilot dan mandat pelaksanaan rentas fungsi bagi menjamin adopsi awal.",
+} as const;
+
 export const urgencyPoints = [
   "MPPM mempunyai mandat dan jaringan, tetapi memerlukan sistem untuk mengaktifkan ekosistem secara berterusan.",
   "SME memerlukan sokongan yang lebih tersusun: digitalisasi, pembiayaan, kepakaran, dan akses pasaran.",

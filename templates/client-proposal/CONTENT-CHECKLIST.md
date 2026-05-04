@@ -20,6 +20,29 @@ Maps to: `proposalMeta` in `lib/data/proposal.ts`.
 
 ## Executive & urgency (stable sections, custom copy)
 
+**45-second Chairman Readout**:
+
+- Summary: {{CHAIRMAN_READOUT_SUMMARY}}
+- Why now: {{CHAIRMAN_READOUT_WHY_NOW}}
+- Outcomes (3 bullets):
+  1. {{CHAIRMAN_OUTCOME_1}}
+  2. {{CHAIRMAN_OUTCOME_2}}
+  3. {{CHAIRMAN_OUTCOME_3}}
+- Decision required: {{CHAIRMAN_DECISION_REQUIRED}}
+
+Maps to: `chairmanReadout`.
+
+**Executive Summary (full memo block)**:
+
+- Context: {{EXEC_CONTEXT}}
+- Recommendation: {{EXEC_RECOMMENDATION}}
+- Deliverables (typically 4–6): {{EXEC_DELIVERABLES}}
+- Commercial snapshot (timeline/scope/model): {{EXEC_COMMERCIAL_SNAPSHOT}}
+- Expected outcomes (3 bullets): {{EXEC_EXPECTED_OUTCOMES}}
+- Decision required / decision ask: {{EXEC_DECISION_REQUIRED}}
+
+Maps to: `executiveBrief`.
+
 **Quick value cards (3)** — why this programme matters:
 
 1. {{VALUE_CARD_1_TITLE}} — {{VALUE_CARD_1_BODY}}

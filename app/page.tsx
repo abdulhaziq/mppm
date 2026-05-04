@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BRAND, LOGO_URL } from "@/lib/brand";
@@ -13,7 +13,7 @@ import { PhoneMockup } from "@/components/ui/PhoneMockup";
 import { PageNav } from "@/components/PageNav";
 import {
   proposalMeta, kpis, policySignals, pipeline, pakarUtilisation,
-  alerts, urgencyPoints, riskIfNot, evidencePoints, problemRows,
+  alerts, chairmanReadout, executiveBrief, urgencyPoints, riskIfNot, evidencePoints, problemRows,
   modules, explorerScreens, journeySteps, impactCards,
 } from "@/lib/data/proposal";
 
@@ -30,6 +30,11 @@ export default function ProposalPage() {
   const [activeModule, setActiveModule] = useState(0);
   const [activeScreenKey, setActiveScreenKey] = useState("chairman");
   const activeScreen = useMemo(() => explorerScreens.find((s) => s.key === activeScreenKey) ?? explorerScreens[0], [activeScreenKey]);
+  const executiveSummaryRef = useRef<HTMLElement | null>(null);
+
+  const scrollToExecutiveSummary = () => {
+    executiveSummaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <main>
@@ -45,8 +50,8 @@ export default function ProposalPage() {
               Satu sistem ekosistem digital untuk menjadikan MPPM bukan sekadar penganjur program, tetapi platform nasional yang menghubungkan SME, Pakar Industri, data, peluang dan kerajaan.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button>Baca Ringkasan Eksekutif →</Button>
-              <Button variant="outline">Lihat Skop Sistem</Button>
+              <Button onClick={scrollToExecutiveSummary}>Baca Ringkasan Eksekutif →</Button>
+              <Button variant="outline" onClick={scrollToExecutiveSummary}>Lihat Skop Sistem</Button>
             </div>
           </div>
           <Card className="border-white/10 bg-white/95">
@@ -71,29 +76,100 @@ export default function ProposalPage() {
         </div>
       </section>
 
-      {/* Executive Summary */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+      {/* Board Brief */}
+      <section className="mx-auto max-w-7xl px-6 py-12 lg:px-10">
         <FadeIn>
           <Card>
-            <div className="p-8 md:p-10">
-              <SectionHeader eyebrow="01 / Ringkasan Eksekutif" title="Apa yang kita mahu tunjuk">
-                <p>Cadangan ini bukan bermula dengan teknologi. Ia bermula dengan peluang strategik: MPPM sudah mempunyai jaringan, kredibiliti dan aspirasi pemerkasaan. Apa yang diperlukan ialah sistem untuk mengaktifkan semua aset tersebut menjadi data, program, konsultasi, peluang dan impak yang boleh diukur.</p>
-              </SectionHeader>
-              <div className="mt-8 grid gap-5 md:grid-cols-3">
-                {[
-                  ["🏛️", "Naik taraf peranan", "Daripada organisation-driven kepada platform-driven."],
-                  ["📊", "Data sebagai kuasa", "MPPM boleh membawa isu SME kepada kerajaan secara lebih berfakta."],
-                  ["🚀", "Pilot rendah risiko", "Mulakan dengan 100 SME dan 20 Pakar Industri untuk validasi."],
-                ].map(([icon, title, text]) => (
-                  <div key={title as string} className="rounded-3xl p-5" style={{ backgroundColor: BRAND.soft }}>
-                    <div className="text-3xl">{icon}</div>
-                    <h3 className="mt-4 font-bold text-slate-950">{title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
+            <div className="grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-10">
+              <div>
+                <SectionHeader eyebrow="01 / Board Brief (45 Saat)" title="Chairman Readout">
+                  <p>{chairmanReadout.summary}</p>
+                </SectionHeader>
+                <div className="mt-6 rounded-3xl border border-amber-100 bg-amber-50 p-5">
+                  <p className="text-xs font-bold uppercase tracking-wide text-amber-700">Why now</p>
+                  <p className="mt-2 text-sm leading-6 text-amber-900">{chairmanReadout.whyNow}</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {chairmanReadout.outcomes.map((item) => (
+                  <div key={item} className="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">
+                    <span className="mr-2 font-bold" style={{ color: BRAND.primary }}>✓</span>
+                    {item}
                   </div>
                 ))}
+                <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Decision required</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">{chairmanReadout.decisionRequired}</p>
+                </div>
               </div>
             </div>
           </Card>
+        </FadeIn>
+      </section>
+
+      {/* Executive Summary */}
+      <section id="executive-summary" ref={executiveSummaryRef} className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+        <FadeIn>
+          <Card>
+            <div className="p-8 md:p-10">
+              <SectionHeader eyebrow="02 / Ringkasan Eksekutif" title="Ringkasan untuk keputusan kepimpinan">
+                <p>{executiveBrief.context}</p>
+              </SectionHeader>
+              <div className="mt-8 grid gap-5 lg:grid-cols-2">
+                <div className="rounded-3xl p-6" style={{ backgroundColor: BRAND.soft }}>
+                  <p className="text-xs font-bold uppercase tracking-wide" style={{ color: BRAND.primary }}>Recommendation</p>
+                  <p className="mt-3 leading-7 text-slate-700">{executiveBrief.recommendation}</p>
+                </div>
+                <div className="rounded-3xl border border-slate-200 p-6">
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Commercial snapshot</p>
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                    {executiveBrief.commercialSnapshot.map((item) => (
+                      <li key={item} className="flex gap-2"><span style={{ color: BRAND.primary }}>•</span>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-3xl border border-slate-200 p-6 lg:col-span-2">
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Deliverables</p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {executiveBrief.deliverables.map((item) => (
+                      <div key={item} className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700">{item}</div>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-3xl border border-slate-200 p-6">
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Expected outcomes</p>
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                    {executiveBrief.expectedOutcomes.map((item) => (
+                      <li key={item} className="flex gap-2"><span style={{ color: BRAND.primary }}>✓</span>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-3xl border border-amber-100 bg-amber-50 p-6">
+                  <p className="text-xs font-bold uppercase tracking-wide text-amber-700">Decision ask</p>
+                  <p className="mt-3 text-sm leading-6 text-amber-900">{executiveBrief.decisionRequired}</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </FadeIn>
+      </section>
+
+      {/* Executive Highlights */}
+      <section className="mx-auto max-w-7xl px-6 pb-10 lg:px-10">
+        <FadeIn>
+          <div className="grid gap-5 md:grid-cols-3">
+            {[
+              ["🏛️", "Naik taraf peranan", "Daripada organisation-driven kepada platform-driven."],
+              ["📊", "Data sebagai kuasa", "MPPM boleh membawa isu SME kepada kerajaan secara lebih berfakta."],
+              ["🚀", "Pilot rendah risiko", "Mulakan dengan 100 SME dan 20 Pakar Industri untuk validasi."],
+            ].map(([icon, title, text]) => (
+              <div key={title as string} className="rounded-3xl p-5" style={{ backgroundColor: BRAND.soft }}>
+                <div className="text-3xl">{icon}</div>
+                <h3 className="mt-4 font-bold text-slate-950">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
+              </div>
+            ))}
+          </div>
         </FadeIn>
       </section>
 
@@ -103,7 +179,7 @@ export default function ProposalPage() {
           <div className="grid gap-8 md:grid-cols-2">
             <FadeIn>
               <Card><div className="p-8">
-                <SectionHeader eyebrow="02 / Kenapa Sekarang" title="Urgensi untuk bertindak" />
+                <SectionHeader eyebrow="03 / Kenapa Sekarang" title="Urgensi untuk bertindak" />
                 <ul className="mt-6 space-y-4">
                   {urgencyPoints.map((item) => (
                     <li key={item} className="flex gap-3 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">
@@ -115,7 +191,7 @@ export default function ProposalPage() {
             </FadeIn>
             <FadeIn delay={0.1}>
               <Card><div className="p-8">
-                <SectionHeader eyebrow="03 / Risiko Jika Tidak" title="Risiko strategik" />
+                <SectionHeader eyebrow="04 / Risiko Jika Tidak" title="Risiko strategik" />
                 <ul className="mt-6 space-y-4">
                   {riskIfNot.map((item) => (
                     <li key={item} className="flex gap-3 rounded-2xl border border-red-100 bg-red-50 p-4 text-sm leading-6 text-red-700">
@@ -131,7 +207,7 @@ export default function ProposalPage() {
 
       {/* Rationale */}
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
-        <FadeIn><SectionHeader eyebrow="04 / Asas Rasional" title="Mengapa sistem ini diperlukan">
+        <FadeIn><SectionHeader eyebrow="05 / Asas Rasional" title="Mengapa sistem ini diperlukan">
           <p>Keperluan sistem ini bukan berpunca daripada kekurangan aktiviti MPPM, tetapi daripada peluang untuk menstrukturkan aktiviti tersebut supaya lebih terukur, berulang dan mampu menghasilkan nilai strategik.</p>
         </SectionHeader></FadeIn>
         <div className="mt-10 grid gap-5 md:grid-cols-2">
@@ -154,7 +230,7 @@ export default function ProposalPage() {
       {/* Problem Statement */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <FadeIn><SectionHeader eyebrow="05 / Pernyataan Masalah" title="Jurang yang perlu diselesaikan">
+          <FadeIn><SectionHeader eyebrow="06 / Pernyataan Masalah" title="Jurang yang perlu diselesaikan">
             <p>MPPM telah mempunyai jaringan, kredibiliti dan inisiatif. Namun, tanpa sistem digital berpusat, nilai jaringan tersebut sukar diaktifkan secara konsisten.</p>
           </SectionHeader></FadeIn>
           <FadeIn>
@@ -180,7 +256,7 @@ export default function ProposalPage() {
           <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.22em]" style={{ color: BRAND.primary }}>06 / Chairman Dashboard</p>
+                <p className="text-sm font-bold uppercase tracking-[0.22em]" style={{ color: BRAND.primary }}>07 / Chairman Dashboard</p>
                 <h3 className="mt-2 text-3xl font-bold text-slate-950">Ecosystem Command Dashboard</h3>
                 <p className="mt-2 max-w-2xl text-slate-600">Paparan untuk Pengerusi melihat kesihatan ekosistem, isu SME, aktivasi Pakar Industri dan peluang kewangan secara ringkas.</p>
               </div>
@@ -255,7 +331,7 @@ export default function ProposalPage() {
       <section className="py-16 text-white" style={{ background: `linear-gradient(135deg, ${BRAND.dark}, #061A16)` }}>
         <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[0.9fr_1.1fr] lg:px-10">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.22em] text-emerald-300">07 / Cadangan Sistem</p>
+            <p className="text-sm font-bold uppercase tracking-[0.22em] text-emerald-300">08 / Cadangan Sistem</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">MDOS sebagai sistem operasi pemerkasaan MPPM</h2>
             <p className="mt-5 text-lg leading-8 text-slate-300">Platform ini menyatukan fungsi ahli, Pakar Industri, program, business matching dan data dasar dalam satu aliran kerja yang boleh diukur.</p>
           </div>
@@ -272,7 +348,7 @@ export default function ProposalPage() {
 
       {/* Module Scope */}
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
-        <FadeIn><SectionHeader eyebrow="08 / Skop Modul" title="Klik modul untuk lihat fungsi dan output" /></FadeIn>
+        <FadeIn><SectionHeader eyebrow="09 / Skop Modul" title="Klik modul untuk lihat fungsi dan output" /></FadeIn>
         <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="grid gap-3">
             {modules.map((m, idx) => (
@@ -321,7 +397,7 @@ export default function ProposalPage() {
       {/* System Explorer */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <FadeIn><SectionHeader eyebrow="09 / Explore The System" title="Simulasi pengalaman aplikasi MPPM">
+          <FadeIn><SectionHeader eyebrow="10 / Explore The System" title="Simulasi pengalaman aplikasi MPPM">
             <p>Pilih paparan di bawah untuk menunjukkan bagaimana sistem akan berfungsi dari perspektif yang berbeza.</p>
           </SectionHeader></FadeIn>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -356,7 +432,7 @@ export default function ProposalPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <FadeIn>
             <div className="rounded-[2rem] p-8 text-white md:p-12" style={{ background: `linear-gradient(135deg, ${BRAND.primary}, ${BRAND.dark})` }}>
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-emerald-200">10 / Impak Dijangka</p>
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-emerald-200">11 / Impak Dijangka</p>
               <h2 className="mt-3 max-w-3xl text-3xl font-bold md:text-5xl">Daripada jaringan kepada sistem impak nasional.</h2>
               <div className="mt-8 grid gap-5 md:grid-cols-3">
                 {impactCards.map(([title, text]) => (
@@ -376,7 +452,7 @@ export default function ProposalPage() {
         <FadeIn>
           <Card>
             <div className="p-8 md:p-10">
-              <SectionHeader eyebrow="11 / Penutup" title="Cadangan untuk pertimbangan MPPM">
+              <SectionHeader eyebrow="12 / Penutup" title="Cadangan untuk pertimbangan MPPM">
                 <p>MPPM telah mempunyai asas yang penting: jaringan, kredibiliti, pengiktirafan Pakar Industri dan aspirasi pemerkasaan. Langkah seterusnya ialah membina sistem yang mampu mengurus, mengaktifkan dan membuktikan impak ekosistem tersebut secara berterusan.</p>
                 <p className="mt-5 font-semibold text-slate-950">MDOS dicadangkan sebagai platform digital strategik untuk menjadikan MPPM lebih tersusun, berdata dan bersedia memainkan peranan yang lebih besar dalam pemerkasaan perniagaan Malaysia.</p>
               </SectionHeader>
