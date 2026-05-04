@@ -31,9 +31,14 @@ export default function ProposalPage() {
   const [activeScreenKey, setActiveScreenKey] = useState("chairman");
   const activeScreen = useMemo(() => explorerScreens.find((s) => s.key === activeScreenKey) ?? explorerScreens[0], [activeScreenKey]);
   const executiveSummaryRef = useRef<HTMLElement | null>(null);
+  const scopeSystemRef = useRef<HTMLElement | null>(null);
 
   const scrollToExecutiveSummary = () => {
     executiveSummaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const scrollToScopeSystem = () => {
+    scopeSystemRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -51,7 +56,7 @@ export default function ProposalPage() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button onClick={scrollToExecutiveSummary}>Baca Ringkasan Eksekutif →</Button>
-              <Button variant="outline" onClick={scrollToExecutiveSummary}>Lihat Skop Sistem</Button>
+              <Button variant="outline" onClick={scrollToScopeSystem}>Lihat Skop Sistem</Button>
             </div>
           </div>
           <Card className="border-white/10 bg-white/95">
@@ -347,7 +352,7 @@ export default function ProposalPage() {
       </section>
 
       {/* Module Scope */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+      <section id="scope-system" ref={scopeSystemRef} className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
         <FadeIn><SectionHeader eyebrow="09 / Skop Modul" title="Klik modul untuk lihat fungsi dan output" /></FadeIn>
         <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="grid gap-3">
